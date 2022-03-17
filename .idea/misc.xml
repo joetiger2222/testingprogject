@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/AndroidStudioProjects/KEEPTAKE2/app/src/main/res/layout/activity_main.xml" value="0.36666666666666664" />
+        <entry key="..\:/AndroidStudioProjects/KEEPTAKE2/app/src/main/res/layout/activity_note.xml" value="0.36666666666666664" />
+        <entry key="..\:/AndroidStudioProjects/KEEPTAKE2/app/src/main/res/layout/activity_recent_note.xml" value="0.36666666666666664" />
+        <entry key="..\:/AndroidStudioProjects/KEEPTAKE2/app/src/main/res/layout/activity_todo_list.xml" value="0.36666666666666664" />
+        <entry key="..\:/AndroidStudioProjects/KEEPTAKE2/app/src/main/res/layout/background_color_custom_dialog.xml" value="0.1" />
+        <entry key="..\:/AndroidStudioProjects/KEEPTAKE2/app/src/main/res/layout/font_size_custom_dialog.xml" value="0.36666666666666664" />
+        <entry key="..\:/AndroidStudioProjects/KEEPTAKE2/app/src/main/res/layout/todo_list_layout.xml" value="0.19306930693069307" />
+        <entry key="..\:/AndroidStudioProjects/KEEPTAKE2/app/src/main/res/menu/menu.xml" value="0.36666666666666664" />
+        <entry key="..\:/AndroidStudioProjects/KEEPTAKE2/app/src/main/res/menu/note_options_menu.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/JOE/AndroidStudioProjects/KEEPTAKE2/app/src/main/res/layout/activity_main.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/JOE/AndroidStudioProjects/KEEPTAKE2/app/src/main/res/layout/activity_note.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/JOE/AndroidStudioProjects/KEEPTAKE2/app/src/main/res/layout/activity_recent_note.xml" value="0.33" />
+        <entry key="..\:/Users/JOE/AndroidStudioProjects/KEEPTAKE2/app/src/main/res/layout/fab.xml" value="0.36666666666666664" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/build/classes" />
+  </component>
+  <component name="ProjectType">
+    <option name="id" value="Android" />
+  </component>
+</project>
