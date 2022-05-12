@@ -1,6 +1,6 @@
 package com.example.keeptake2;
 
-import static com.example.keeptake2.fontSizeDialogRcntNote.rcntNoteFntSize;
+import static com.example.keeptake2.fontSizeDialogRcntNote.font;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -19,34 +19,17 @@ import android.widget.EditText;
 
 public class recentNoteActivity extends AppCompatActivity {
     private static int recentNoteColor =0;
-    public static EditText recentNoteTitle,recentNote;
+    public static EditText title,recentNote;
     public  static ConstraintLayout recentNoteLayout;
+    public int noteId;
+    public String noteTitleString;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recent_note);
         recentNoteLayout=findViewById(R.id.recentNoteActivity);
-        recentNoteTitle=findViewById(R.id.recentNoteTitle);
+        title =findViewById(R.id.recentNoteTitle);
         recentNote=findViewById(R.id.recentNote);
-        recentNoteTitle.setText(getNoteTitle(getNoteId()));
-        loadNoteFromDB();
-    }
-
-
-    public int getNoteId(){
-        Intent intent=getIntent();
-        return intent.getIntExtra("noteId",-1);
-    }
-
-    public String getNoteTitle(int noteId){
-        if(noteId!=-1)
-            return MainActivity.writingNotesList.get(noteId);
-        else
-            return "error happened";
-    }
-
-
-    public void loadNoteFromDB(){
         try {
             SQLiteDatabase sqLiteDatabase = openOrCreateDatabase("WritingNoteDB", MODE_PRIVATE, null);
             sqLiteDatabase.execSQL("CREATE TABLE IF NOT EXISTS noteTable(title VARCHAR,noteText VARCHAR,noteFontSize int,noteBackGround int)");
@@ -57,10 +40,15 @@ public class recentNoteActivity extends AppCompatActivity {
             int noteFontSizeIndex=cursor.getColumnIndex("noteFontSize");
             int noteBackGroundColorIndex=cursor.getColumnIndex("noteBackGround");
             while (cursor != null) {
-                if((getNoteTitle(getNoteId())).equals(cursor.getString(titleIndex))){
+                Intent intent=getIntent();
+                noteId= intent.getIntExtra("noteId",-1);
+                if(noteId!=-1) {
+                    noteTitleString =MainActivity.writingNotesList.get(noteId);
+                }else noteTitleString ="error happened";
+                if((noteTitleString).equals(cursor.getString(titleIndex))){
                     recentNote.setText(cursor.getString(noteTextIndex));
-                    rcntNoteFntSize=cursor.getInt(noteFontSizeIndex);
-                    recentNote.setTextSize(rcntNoteFntSize);
+                    font =cursor.getInt(noteFontSizeIndex);
+                    recentNote.setTextSize(font);
                     recentNoteLayout.setBackgroundColor(cursor.getInt(noteBackGroundColorIndex));
                     break;
                 }
@@ -70,12 +58,18 @@ public class recentNoteActivity extends AppCompatActivity {
         }catch (Exception e){
             e.printStackTrace();
         }
+        Intent intent=getIntent();
+        noteId= intent.getIntExtra("noteId",-1);
+        if(noteId!=-1) {
+            noteTitleString =MainActivity.writingNotesList.get(noteId);
+        }else noteTitleString ="error happened";
+        title.setText(noteTitleString);
     }
 
 
 
 
-    public static void changeRcntNoteFontSze(int i){recentNote.setTextSize(i);}
+    public static void changefont(int i){recentNote.setTextSize(i);}
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -101,50 +95,38 @@ public class recentNoteActivity extends AppCompatActivity {
 
 
 
-    public static void changeWritingNoteToBlue(){
-        recentNoteLayout.setBackgroundColor(Color.BLUE);
-        recentNote.setTextColor(Color.WHITE);
+
+    public static void changeWritingNoteColor(int colorId){// to person who will take background class
+        switch (colorId){
+            case 0:
+                recentNote.setBackgroundColor(Color.BLUE);
+                break;
+            case 1:
+                recentNote.setBackgroundColor(Color.RED);
+                break;
+            case 2:
+                recentNote.setBackgroundColor(Color.YELLOW);
+                break;
+            case 3:
+                recentNote.setBackgroundColor(Color.WHITE);
+                break;
+        }
     }
-    public static void changeWritingNoteToOrange(){recentNoteLayout.setBackgroundColor(Color.YELLOW);}
-
-    public static void changeWritingNoteToRed(){
-        recentNoteLayout.setBackgroundColor(Color.RED);
-        recentNote.setTextColor(Color.WHITE);
-    }
-    public static void changeWritingNoteToWhite(){
-        recentNoteLayout.setBackgroundColor(Color.WHITE);
-        recentNote.setTextColor(Color.BLACK);
-    }
-
-
-    public static void getNoteColor(){
-        recentNoteColor = ((ColorDrawable)recentNoteLayout.getBackground()).getColor();}
 
 
 
-
-
-
-
-
-
-    public void updateDB(){
+    @Override
+    public void onBackPressed() {
+        recentNoteColor = ((ColorDrawable)recentNoteLayout.getBackground()).getColor();
         try {
             SQLiteDatabase sqLiteDatabase = openOrCreateDatabase("WritingNoteDB", MODE_PRIVATE, null);
             sqLiteDatabase.execSQL("CREATE TABLE IF NOT EXISTS noteTable(title VARCHAR,noteText VARCHAR,noteFontSize int,noteBackGround int)");
-            String update = "UPDATE noteTable SET title = " +"'"+recentNoteTitle.getText().toString()+"'" + " , noteText = "+"'" + recentNote.getText().toString()+"'"+" , noteFontSize = "+"'"+rcntNoteFntSize+"'"+", noteBackGround = "+"'"+ recentNoteColor +"'" + " WHERE title = " +"'"+getNoteTitle(getNoteId())+"'";
+            String update = "UPDATE noteTable SET title = " +"'"+ title.getText().toString()+"'" + " , noteText = "+"'" + recentNote.getText().toString()+"'"+" , noteFontSize = "+"'"+ font +"'"+", noteBackGround = "+"'"+ recentNoteColor +"'" + " WHERE title = " +"'"+noteTitleString+"'";
             sqLiteDatabase.execSQL(update);
             sqLiteDatabase.close();
         }catch (Exception e){
             e.printStackTrace();
         }
-    }
-
-
-    @Override
-    public void onBackPressed() {
-        getNoteColor();
-        updateDB();
         super.onBackPressed();
     }
 }

@@ -1,13 +1,11 @@
 package com.example.keeptake2;
 
-import static com.example.keeptake2.FontSizeCustomDialog.fontSizeNewNote;
+import static com.example.keeptake2.FontSizeCustomDialog.font;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
-import android.content.DialogInterface;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -19,8 +17,8 @@ import android.widget.EditText;
 
 
 public class noteActivity extends AppCompatActivity {
-    private static int newNoteColor=0;
-    EditText writingNoteTitle;
+    public static int newNoteColor=0;
+    public static EditText writingNoteTitle;
     public static EditText writingNote;
     public static ConstraintLayout noteActivity;
 
@@ -58,67 +56,42 @@ public class noteActivity extends AppCompatActivity {
     }
 
 
-    public static void changeFontSize(int fontSize){writingNote.setTextSize(fontSize);}
-
-    public static void changeWritingNoteToBlue(){
-        noteActivity.setBackgroundColor(Color.BLUE);
-        writingNote.setTextColor(Color.WHITE);
-    }
-    public static void changeWritingNoteToOrange(){noteActivity.setBackgroundColor(Color.YELLOW);}
-
-    public static void changeWritingNoteToRed(){
-        noteActivity.setBackgroundColor(Color.RED);
-        writingNote.setTextColor(Color.WHITE);
-    }
-
-    public static void changeWritingNoteToWhite(){
-        noteActivity.setBackgroundColor(Color.WHITE);
-        writingNote.setTextColor(Color.BLACK);
-    }
+    public static void changeFontSize(int fontSize){writingNote.setTextSize(fontSize);}//to the person who will take font size class
 
 
-    public static void getNoteColor(){newNoteColor = ((ColorDrawable)noteActivity.getBackground()).getColor();}
 
-
-    public void saveNoteToDB(){
-        try {
-            SQLiteDatabase sqLiteDatabase = openOrCreateDatabase("WritingNoteDB", MODE_PRIVATE, null);
-            sqLiteDatabase.execSQL("CREATE TABLE IF NOT EXISTS noteTable(title VARCHAR,noteText VARCHAR,noteFontSize int,noteBackGround int)");
-            sqLiteDatabase.execSQL("INSERT INTO noteTable (title , noteText , noteFontSize , noteBackGround) values (" +"'"+writingNoteTitle.getText() +"'"+" , " +"'"+writingNote.getText()+"'"+ " , "+"'"+fontSizeNewNote+"'"+" , "+"'"+newNoteColor+"'"+")");
-            sqLiteDatabase.close();
-        }catch(Exception e){e.printStackTrace();}
+    public static void changeWritingNoteColor(int colorId){// to person who will take background class
+        switch (colorId){
+            case 0:
+                noteActivity.setBackgroundColor(Color.BLUE);
+                break;
+            case 1:
+                noteActivity.setBackgroundColor(Color.RED);
+                break;
+            case 2:
+                noteActivity.setBackgroundColor(Color.YELLOW);
+                break;
+            case 3:
+                noteActivity.setBackgroundColor(Color.WHITE);
+                break;
+        }
     }
 
 
-    public void updateWritingNoteList(){MainActivity.writingNotesList.add(writingNoteTitle.getText().toString());}
-
-
-    public void createUnAcceptableTitleDialog(){
-        new AlertDialog.Builder(noteActivity.this)
-                .setTitle("Un Accepable Title")
-                .setMessage("there is another note with the same title please rename your note title")
-                .setCancelable(true)
-                .setNegativeButton("Delete Note", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {noteActivity.super.onBackPressed();}
-                })
-                .setPositiveButton("ok", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {}}).show();
-    }
     
     @Override
     public void onBackPressed() {
-        if(MainActivity.writingNotesList.contains(writingNoteTitle.getText().toString())){
-            createUnAcceptableTitleDialog();
-        }else if(writingNoteTitle.getText().toString().equals("")){super.onBackPressed();}
-        else {
-            getNoteColor();
-            saveNoteToDB();
-            updateWritingNoteList();
-            MainActivity.notifyAdapter();
+        newNoteColor = ((ColorDrawable)noteActivity.getBackground()).getColor();
+        try {
+            SQLiteDatabase sqLiteDatabase = openOrCreateDatabase("WritingNoteDB", MODE_PRIVATE, null);
+            sqLiteDatabase.execSQL("CREATE TABLE IF NOT EXISTS noteTable(title VARCHAR,noteText VARCHAR,noteFontSize int,noteBackGround int)");
+            sqLiteDatabase.execSQL("INSERT INTO noteTable (title , noteText , noteFontSize , noteBackGround) values (" +"'"+writingNoteTitle.getText() +"'"+" , " +"'"+writingNote.getText()+"'"+ " , "+"'"+ font +"'"+" , "+"'"+newNoteColor+"'"+")");
+            sqLiteDatabase.close();
+        }catch(Exception e){e.printStackTrace();}
+        MainActivity.writingNotesList.add(writingNoteTitle.getText().toString());
+            MainActivity.arrayAdapter.notifyDataSetChanged();
             super.onBackPressed();
-        }
+
     }
 }
 

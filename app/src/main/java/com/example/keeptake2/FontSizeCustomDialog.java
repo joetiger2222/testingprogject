@@ -14,9 +14,9 @@ import androidx.annotation.RequiresApi;
 public class FontSizeCustomDialog extends Dialog implements View.OnClickListener {
     public Activity c;
     public Dialog d;
-    public static SeekBar fontSizeSeekBar;
-    public Button resetFontSizeBtn;
-    public static int fontSizeNewNote=20;
+    public static SeekBar seekbar;
+    public Button resetbutton;
+    public static int font =20;
 
 
     public FontSizeCustomDialog(Activity a) {
@@ -31,14 +31,14 @@ public class FontSizeCustomDialog extends Dialog implements View.OnClickListener
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.font_size_custom_dialog);
-        resetFontSizeBtn=findViewById(R.id.resetBtn);
-        fontSizeSeekBar=findViewById(R.id.fontSizeSeekBar);
-        fontSizeSeekBar.setMin(12);
-        fontSizeSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+        resetbutton =findViewById(R.id.resetBtn);
+        seekbar =findViewById(R.id.fontSizeSeekBar);
+        seekbar.setMin(12);
+        seekbar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
                 noteActivity.changeFontSize(i);
-                fontSizeNewNote=i;
+                font =i;
             }
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {}
@@ -46,11 +46,11 @@ public class FontSizeCustomDialog extends Dialog implements View.OnClickListener
             public void onStopTrackingTouch(SeekBar seekBar) {}
         });
 
-        resetFontSizeBtn.setOnClickListener(new View.OnClickListener() {
+        resetbutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 noteActivity.changeFontSize(20);
-                fontSizeSeekBar.setProgress(20);
+                seekbar.setProgress(20);
             }
         });
 

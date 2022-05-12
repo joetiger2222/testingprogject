@@ -2,7 +2,6 @@ package com.example.keeptake2;
 
 import android.app.Activity;
 import android.app.Dialog;
-import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
@@ -10,15 +9,14 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.SeekBar;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 
 public class fontSizeDialogRcntNote extends Dialog implements View.OnClickListener {
     public Activity activity;
     public Dialog dialog;
-    public static SeekBar fontSizeSeekBarRcntNote;
-    public Button resetFontSizeBtnRcntNote;
-    public static int rcntNoteFntSize=20;
+    public static SeekBar seekbar;
+    public Button resetbutton;
+    public static int font =20;
 
     public fontSizeDialogRcntNote(Activity a) {
         super(a);
@@ -32,15 +30,15 @@ public class fontSizeDialogRcntNote extends Dialog implements View.OnClickListen
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.font_size_custom_dialog);
-        resetFontSizeBtnRcntNote=findViewById(R.id.resetBtn);
-        fontSizeSeekBarRcntNote=findViewById(R.id.fontSizeSeekBar);
-        fontSizeSeekBarRcntNote.setMin(12);
-        fontSizeSeekBarRcntNote.setProgress(rcntNoteFntSize);
-        fontSizeSeekBarRcntNote.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+        resetbutton =findViewById(R.id.resetBtn);
+        seekbar =findViewById(R.id.fontSizeSeekBar);
+        seekbar.setMin(12);
+        seekbar.setProgress(font);
+        seekbar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
-                recentNoteActivity.changeRcntNoteFontSze(i);
-                rcntNoteFntSize=i;
+                recentNoteActivity.changefont(i);
+                font =i;
             }
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {}
@@ -48,11 +46,11 @@ public class fontSizeDialogRcntNote extends Dialog implements View.OnClickListen
             public void onStopTrackingTouch(SeekBar seekBar) {}
         });
 
-        resetFontSizeBtnRcntNote.setOnClickListener(new View.OnClickListener() {
+        resetbutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                recentNoteActivity.changeRcntNoteFontSze(20);
-                fontSizeSeekBarRcntNote.setProgress(20);
+                recentNoteActivity.changefont(20);
+                seekbar.setProgress(20);
             }
         });
     }

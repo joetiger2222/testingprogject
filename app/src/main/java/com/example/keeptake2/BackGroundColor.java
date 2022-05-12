@@ -5,19 +5,15 @@ import android.app.Dialog;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
-import android.widget.Button;
 import android.widget.ImageView;
-
-import androidx.annotation.NonNull;
-import androidx.constraintlayout.widget.ConstraintLayout;
 
 public class BackGroundColor extends Dialog  {
     public Activity c;
     public Dialog d;
-    ImageView blueCircle;
-    ImageView redCircle;
-    ImageView orangeCircle;
-    ImageView whiteCircle;
+    public ImageView b;
+    public ImageView r;
+    public ImageView o;
+    public ImageView w;
     public BackGroundColor(Activity a) {
         super(a);
         this.c=a;
@@ -29,28 +25,23 @@ public class BackGroundColor extends Dialog  {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.background_color_custom_dialog);
-        whiteCircle=findViewById(R.id.whiteCircle);
-        blueCircle=findViewById(R.id.blueCircle);
-        redCircle=findViewById(R.id.redCircle);
-        orangeCircle=findViewById(R.id.orangeCircle);
-        blueCircle.setOnClickListener(new View.OnClickListener() {
+        w =findViewById(R.id.whiteCircle);
+        b =findViewById(R.id.blueCircle);
+        r =findViewById(R.id.redCircle);
+        o =findViewById(R.id.orangeCircle);
+        b.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {noteActivity.changeWritingNoteToBlue();}});
-        redCircle.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {noteActivity.changeWritingNoteColor(0);}});
+        r.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {noteActivity.changeWritingNoteToRed();}});
-        orangeCircle.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {noteActivity.changeWritingNoteColor(1);}});
+        o.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {noteActivity.changeWritingNoteToOrange();}});
+            public void onClick(View view) {noteActivity.changeWritingNoteColor(2);}});
 
-        whiteCircle.setOnClickListener(new View.OnClickListener() {
+        w.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {noteActivity.changeWritingNoteToWhite();}});
+            public void onClick(View view) {noteActivity.changeWritingNoteColor(3);}});
     }
-
-
-
-
-
 
 }

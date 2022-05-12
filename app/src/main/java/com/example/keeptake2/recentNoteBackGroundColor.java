@@ -33,17 +33,17 @@ public class recentNoteBackGroundColor extends Dialog {
         orangeCircle=findViewById(R.id.orangeCircle);
         blueCircle.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {recentNoteActivity.changeWritingNoteToBlue();}});
+            public void onClick(View view) {recentNoteActivity.changeWritingNoteColor(0);}});
         redCircle.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {recentNoteActivity.changeWritingNoteToRed();}});
+            public void onClick(View view) {recentNoteActivity.changeWritingNoteColor(1);}});
         orangeCircle.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {recentNoteActivity.changeWritingNoteToOrange();}});
+            public void onClick(View view) {recentNoteActivity.changeWritingNoteColor(2);}});
         whiteCircle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                recentNoteActivity.changeWritingNoteToWhite();}});
+                recentNoteActivity.changeWritingNoteColor(3);}});
     }
 
 }
